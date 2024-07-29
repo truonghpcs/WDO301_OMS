@@ -8,5 +8,8 @@ router.get('/list', certificateController.getAllCertificate);
 router.get('/detail/:id', certificateController.getCertificateById);
 router.post('/list-id', certificateController.getCertificateByListId);
 router.post('/new',  certificateController.createCertificate);
+router.delete('/delete/:id', certificateController.deleteCertificate);
+router.put('/edit/:id', certificateController.editCertificate);
+
 
 module.exports = router;

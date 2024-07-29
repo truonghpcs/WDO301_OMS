@@ -19,6 +19,44 @@ const certificateController = {
       res.status(500).json({ message: err.message });
     }
   },
+  editCertificate: async (req, res) => {
+    const { title, slug, image } = req.body;
+    try {
+      const updateData = {};
+
+      if (title !== undefined) updateData.title = title;
+      if (slug !== undefined) updateData.slug = slug;
+      if (image !== undefined) updateData.image = image;
+
+      const updatedCertificate = await
+        Certificate
+          .findByIdAndUpdate(req.params.id, updateData, { new: true });
+          
+      if (!updatedCertificate) {
+        return res.status(404).json({ message: "Certificate not found" });
+      }
+
+      res.status(200).json({ data: updatedCertificate });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  },
+  
+  deleteCertificate: async (req, res) => {
+    try {
+      const deletedCertificate = await CertificateModel.findByIdAndDelete(
+        req.params.id,
+      );
+
+      if (!deletedCertificate) {
+        return res.status(404).json({ message: "Certificate not found" });
+      }
+
+      res.status(200).json({ message: "Certificate deleted successfully" });
+    } catch (err) {
+      res.status(500).json({ message: err.message });
+    }
+  },
   getCertificateByListId: async (req, res) => {
     try {
       const listId = req.body;
@@ -236,7 +274,7 @@ const certificateController = {
       res.status(500).json({ message: err.message });
     }
   },
-  
+
 };
 
 module.exports = certificateController;

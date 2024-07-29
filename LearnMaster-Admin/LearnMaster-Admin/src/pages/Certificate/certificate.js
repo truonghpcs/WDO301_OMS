@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Image } from 'antd';
-import 'antd/dist/reset.css'; 
-
+import { Table, Image, Button, notification, Popconfirm } from 'antd';
+import 'antd/dist/reset.css'; // Ensure this import matches your Ant Design version
 
 function Certificate() {
     const [certificates, setCertificates] = useState([]);
@@ -12,6 +11,29 @@ function Certificate() {
             .then(data => setCertificates(data.data))
             .catch(error => console.error('Error fetching certificates:', error));
     }, []);
+
+    const handleDelete = (id) => {
+        fetch(`http://localhost:3100/api/certificate/delete/${id}`, {
+            method: 'DELETE',
+        })
+            .then(response => response.json())
+            .then(() => {
+                setCertificates(prevCertificates =>
+                    prevCertificates.filter(cert => cert._id !== id)
+                );
+                notification.success({
+                    message: 'Success',
+                    description: 'Certificate deleted successfully.',
+                });
+            })
+            .catch(error => {
+                console.error('Error deleting certificate:', error);
+                notification.error({
+                    message: 'Error',
+                    description: 'Failed to delete certificate.',
+                });
+            });
+    };
 
     const columns = [
         {
@@ -40,10 +62,28 @@ function Certificate() {
             dataIndex: 'updatedAt',
             key: 'updatedAt',
         },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (text, record) => (
+                <Popconfirm
+                    title="Are you sure you want to delete this certificate?"
+                    onConfirm={() => handleDelete(record._id)}
+                    okText="Yes"
+                    cancelText="No"
+                >
+                    <Button type="danger">
+                        Delete
+                    </Button>
+                </Popconfirm>
+            ),
+        },
     ];
 
     return (
-        <Table dataSource={certificates} columns={columns} rowKey="_id" />
+        <div>
+            <Table dataSource={certificates} columns={columns} rowKey="_id" />
+        </div>
     );
 }
 
