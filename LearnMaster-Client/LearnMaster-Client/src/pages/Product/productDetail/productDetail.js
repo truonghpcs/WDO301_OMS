@@ -137,16 +137,16 @@ const ProductDetail = () => {
       try {
         const response = await bookingApi.createCheckoutSession({
           items: [
-            { name: productDetail.title, price: productDetail.price, qty: 1 },
+            { name: productDetail?.title, price: productDetail?.price, qty: 1 },
           ],
-          userId: userRole._id,
-          courseId: productDetail._id,
+          userId: userRole?._id,
+          courseId: productDetail?._id,
           mentorId: selectedMentor || null,
-          customer_id: userRole._id,
-          fullName: userRole.fullName,
-          address: userRole.address,
-          email: userRole.email,
-          phone: userRole.phone,
+          customer_id: userRole?._id,
+          fullName: userRole?.fullName,
+          address: userRole?.address,
+          email: userRole?.email,
+          phone: userRole?.phone,
         });
 
         if (response.message == "Bạn đã mua khóa học này trước đó!") {
@@ -287,11 +287,11 @@ const ProductDetail = () => {
                           <p>
                             Chứng chỉ :
                             {certificateList
-                              .map((item) => item.title)
+                              .map((item) => item?.title)
                               .toString(", ")}
                           </p>
                         )}
-
+{/* 
                         <Row>
                           {certificateList &&
                             certificateList.map((item, index) => {
@@ -304,7 +304,7 @@ const ProductDetail = () => {
                                 />
                               );
                             })}
-                        </Row>
+                        </Row> */}
 
                         {classes.length > 0 && (
                           <Select
@@ -361,7 +361,7 @@ const ProductDetail = () => {
                 className="title_total"
                 style={{ fontSize: 20, marginBottom: 10, fontWeight: "bold" }}
               >
-                Giới thiệu: "{productDetail.title}"
+                Giới thiệu: "{productDetail?.title}"
               </div>
               <div
                 className="describe_detail_description"
@@ -380,17 +380,17 @@ const ProductDetail = () => {
                     header={
                       <div className="flex justify-between items-center">
                         <h3 className="text-lg font-semibold">
-                          {lesson.title}
+                          {lesson?.title}
                         </h3>
                         <Button type="link">Xem video</Button>
                       </div>
                     }
-                    key={lesson._id}
+                    key={lesson?._id}
                   >
                     <div className="border p-4 rounded-lg shadow-md">
                       <div className="aspect-w-16 aspect-h-9">
                         <iframe
-                          title={lesson.title}
+                          title={lesson?.title}
                           className="w-full h-full"
                           src={`https://www.youtube.com/embed/${getYoutubeId(
                             lesson.videoUrl
@@ -447,7 +447,7 @@ const ProductDetail = () => {
                           overflow: "hidden",
                         }}
                       >
-                        {item.title}
+                        {item?.title}
                       </p>
                     </div>
                   </div>

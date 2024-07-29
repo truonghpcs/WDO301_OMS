@@ -154,7 +154,7 @@ const authController = {
       });
 
       const mailOptions = {
-        from: "coms@gmail.com",
+        from: "OMS@gmail.com",
         to: user.email,
         subject: "Reset Password",
         text: `To reset your password, click on the following link: http://localhost:3500/reset-password/${token}`,

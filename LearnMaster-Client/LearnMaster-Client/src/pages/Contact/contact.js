@@ -285,7 +285,7 @@ const Contact = () => {
                       <li>
                         <i class="fas fa-envelope fa-2x text-primary"></i>
                         <p>
-                          <small>quanghuy18092001@gmail.com</small>
+                          <small>truonghpcs302@gmail.com</small>
                         </p>
                       </li>
                     </ul>
