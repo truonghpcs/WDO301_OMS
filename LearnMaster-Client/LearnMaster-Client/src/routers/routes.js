@@ -50,6 +50,9 @@ const RouterURL = withRouter(({ location }) => {
                     <PrivateRoute exact path="/profile">
                         <Profile />
                     </PrivateRoute>
+                    <PrivateRoute exact path="/schedule">
+                        <Profile />
+                    </PrivateRoute>
                     <PrivateRoute exact path="/pay">
                         <Pay />
                     </PrivateRoute>
@@ -98,7 +101,7 @@ const RouterURL = withRouter(({ location }) => {
                     </Route>
                     <Route exact path="/product-list/:id">
                         <ProductList />
-                    </Route> 
+                    </Route>
                     <Route exact path="/activate/:token">
                         <ActivateAccount />
                     </Route>
@@ -126,7 +129,6 @@ const RouterURL = withRouter(({ location }) => {
                     <PublicRoute exact path="/reset-password/:id">
                         <ResetPassword />
                     </PublicRoute>
-                   
                 </Layout>
             </Layout>
         </div>
@@ -192,6 +194,9 @@ const RouterURL = withRouter(({ location }) => {
                     </Route>
                     <Route exact path="/reset-password/:id">
                         <LoginContainer />
+                    </Route>
+                    <Route exact path="/schedule">
+                        <PrivateContainer />
                     </Route>
                     <Route>
                         <NotFound />

@@ -6,14 +6,42 @@ import '../TeachingsSchedule/teachingSchedule.css'; // Đảm bảo đường d�
 
 function TeachingSchedule() {
     const [classes, setClasses] = useState([]);
+    const [courses, setCourses] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
+
+        // Fetch classes
         axios.get(`http://localhost:3100/api/class/mentor/${user._id}`)
             .then(res => {
-                setClasses(res.data.data);
+                const fetchedClasses = res.data.data;
+                setClasses(fetchedClasses);
+
+                // Extract unique course IDs
+                const courseIds = [...new Set(fetchedClasses.map(item => item.course))];
+                return courseIds;
+            })
+            .then(courseIds => {
+                // Fetch course details for each course ID
+                return Promise.all(courseIds.map(id =>
+                    axios.get(`http://localhost:3100/api/course/${id}`)
+                ));
+            })
+            .then(responses => {
+                const fetchedCourses = responses.reduce((acc, response) => {
+                    const course = response.data;
+
+                    if (course && course.data._id && course.data.title) {
+                        acc[course.data._id] = course.data.title; 
+                    } else {
+                        console.error("Unexpected course data structure:", course);
+                    }
+                    return acc;
+                }, {});
+
+                setCourses(fetchedCourses);
             })
             .catch(err => {
                 setError('Failed to fetch data. Please try again.');
@@ -42,8 +70,8 @@ function TeachingSchedule() {
         },
         {
             title: 'Course',
-            dataIndex: 'course',
             key: 'course',
+            render: (text, record) => courses[record.course] || 'Loading...',
         },
         {
             title: 'Action',

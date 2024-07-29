@@ -52,12 +52,7 @@ function DropdownAvatar() {
         </a>
       </Menu.Item>
       <Menu.Item icon={<ShoppingCartOutlined />}  >
-        <a target="_blank" rel="noopener noreferrer" onClick={() => handleRouter("/cart-history")}>
-         Khóa học đã đăng ký
-        </a>
-      </Menu.Item>
-      <Menu.Item icon={<ShoppingCartOutlined />}  >
-        <a target="_blank" rel="noopener noreferrer" onClick={() => handleRouter("/")}>
+        <a target="_blank" rel="noopener noreferrer" onClick={() => handleRouter("/schedule")}>
          Lịch học
         </a>
       </Menu.Item>
