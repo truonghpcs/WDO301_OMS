@@ -85,7 +85,7 @@ function Sidebar() {
     },
     {
       key: "order-list",
-      title: "Đơn hàng",
+      title: "Rút tiền",
       link: "/order-list",
       icon: <ShoppingCartOutlined />,
     },

@@ -26,6 +26,7 @@ import ChangePassword from "../pages/ChangePassword/changePassword";
 import ActivateAccount from "../pages/ActivateAccount/activateAccount";
 import Success from "../pages/Success/success";
 import Cancel from "../pages/Cancel/cancel";
+import Schedule from "../pages/Schedule/Schedule";
 
 
 const RouterURL = withRouter(({ location }) => {
@@ -51,7 +52,7 @@ const RouterURL = withRouter(({ location }) => {
                         <Profile />
                     </PrivateRoute>
                     <PrivateRoute exact path="/schedule">
-                        <Profile />
+                        <Schedule />
                     </PrivateRoute>
                     <PrivateRoute exact path="/pay">
                         <Pay />

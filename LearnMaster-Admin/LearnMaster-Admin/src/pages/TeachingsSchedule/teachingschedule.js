@@ -9,48 +9,53 @@ function TeachingSchedule() {
     const [courses, setCourses] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalItems, setTotalItems] = useState(0);
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user'));
 
-        // Fetch classes
-        axios.get(`http://localhost:3100/api/class/mentor/${user._id}`)
-            .then(res => {
-                const fetchedClasses = res.data.data;
-                setClasses(fetchedClasses);
+        const fetchClasses = (page) => {
+            setLoading(true);
+            axios.get(`http://localhost:3100/api/class/mentor/${user._id}?page=${page}`)
+                .then(res => {
+                    const fetchedClasses = res.data.data;
+                    setClasses(fetchedClasses);
+                    setTotalItems(res.data.total);
 
-                // Extract unique course IDs
-                const courseIds = [...new Set(fetchedClasses.map(item => item.course))];
-                return courseIds;
-            })
-            .then(courseIds => {
-                // Fetch course details for each course ID
-                return Promise.all(courseIds.map(id =>
-                    axios.get(`http://localhost:3100/api/course/${id}`)
-                ));
-            })
-            .then(responses => {
-                const fetchedCourses = responses.reduce((acc, response) => {
-                    const course = response.data;
+                    const courseIds = [...new Set(fetchedClasses.map(item => item.course))];
+                    return courseIds;
+                })
+                .then(courseIds => {
+                    return Promise.all(courseIds.map(id =>
+                        axios.get(`http://localhost:3100/api/course/${id}`)
+                    ));
+                })
+                .then(responses => {
+                    const fetchedCourses = responses.reduce((acc, response) => {
+                        const course = response.data;
 
-                    if (course && course.data._id && course.data.title) {
-                        acc[course.data._id] = course.data.title; 
-                    } else {
-                        console.error("Unexpected course data structure:", course);
-                    }
-                    return acc;
-                }, {});
+                        if (course && course.data._id && course.data.title) {
+                            acc[course.data._id] = course.data.title;
+                        } else {
+                            console.error("Unexpected course data structure:", course);
+                        }
+                        return acc;
+                    }, {});
 
-                setCourses(fetchedCourses);
-            })
-            .catch(err => {
-                setError('Failed to fetch data. Please try again.');
-                console.error(err);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
-    }, []);
+                    setCourses(fetchedCourses);
+                })
+                .catch(err => {
+                    setError('Failed to fetch data. Please try again.');
+                    console.error(err);
+                })
+                .finally(() => {
+                    setLoading(false);
+                });
+        };
+
+        fetchClasses(currentPage);
+    }, [currentPage]);
 
     const columns = [
         {
@@ -99,7 +104,12 @@ function TeachingSchedule() {
                 dataSource={classes}
                 columns={columns}
                 rowKey="_id"
-                pagination={false}
+                pagination={{
+                    current: currentPage,
+                    total: totalItems,
+                    pageSize: 10,
+                    onChange: (page) => setCurrentPage(page),
+                }}
             />
         </div>
     );

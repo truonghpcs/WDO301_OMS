@@ -9,7 +9,7 @@ function _Footer(){
         <Footer style={{
             marginLeft: 230,
             textAlign: 'center'}}>
-            Copyright@ 2024 Created by LearnMaster
+            Copyright@ 2024 Created by OMS
         </Footer>
     );
 }
