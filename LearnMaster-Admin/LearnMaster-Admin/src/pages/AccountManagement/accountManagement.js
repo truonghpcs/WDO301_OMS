@@ -11,7 +11,6 @@ import {
   BackTop,
   Breadcrumb,
   Button,
-  Card,
   Col,
   Form,
   Input,
@@ -43,28 +42,33 @@ const AccountManagement = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    fetchUsers();
-    fetchCertificates();
+    loadData();
   }, []);
 
-  const fetchUsers = async () => {
+  const loadData = async () => {
     setLoading(true);
     try {
-      const response = await userApi.listUserByAdmin({ page: 1, limit: 1000 });
-      setUsers(response.data.docs);
+      const [userResponse, certificateResponse] = await Promise.all([
+        userApi.listUserByAdmin({ page: 1, limit: 1000 }),
+        certificateApi.getAllCertificate(),
+      ]);
+
+      const certificateMap = certificateResponse.data.reduce((acc, cert) => {
+        acc[cert._id] = cert.title;
+        return acc;
+      }, {});
+
+      const usersWithCertificates = userResponse.data.docs.map((user) => ({
+        ...user,
+        certificate: user.certificates.map(id => certificateMap[id]).join(', '),
+      }));
+
+      setUsers(usersWithCertificates);
+      setCertificates(certificateResponse.data);
     } catch (error) {
-      console.error("Failed to fetch users:", error);
+      console.error("Failed to fetch data:", error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const fetchCertificates = async () => {
-    try {
-      const response = await certificateApi.getAllCertificate();
-      setCertificates(response.data);
-    } catch (error) {
-      console.error("Failed to fetch certificates:", error);
     }
   };
 
@@ -85,7 +89,7 @@ const AccountManagement = () => {
         message: "Thông báo",
         description: status === "actived" ? "Mở khóa thành công" : "Chặn thành công",
       });
-      fetchUsers();
+      loadData();
     } catch (error) {
       notification["error"]({
         message: "Thông báo",
@@ -103,7 +107,7 @@ const AccountManagement = () => {
         description: "Tạo chứng chỉ vào mentor thành công",
       });
       setOpenModal(false);
-      fetchUsers();
+      loadData();
     } catch (error) {
       notification["error"]({
         message: "Thông báo",
@@ -136,6 +140,11 @@ const AccountManagement = () => {
       title: "Số điện thoại",
       dataIndex: "phone",
       key: "phone",
+    },
+    {
+      title: "Chứng chỉ",
+      dataIndex: "certificate",
+      key: "certificate",
     },
     {
       title: "Role",
@@ -199,7 +208,7 @@ const AccountManagement = () => {
   const handleSearchChange = async (e) => {
     setSearchInput(e.target.value);
     if (e.target.value.trim() === "") {
-      fetchUsers();
+      loadData();
     } else {
       try {
         const response = await userApi.searchUser(e.target.value);
@@ -260,45 +269,66 @@ const AccountManagement = () => {
             </Row>
           </PageHeader>
         </div>
-        <Card title="Quản lý tài khoản" bordered={false} style={{ marginTop: 20, marginRight: 5 }}>
-          <Table columns={columns} dataSource={users} pagination={{ position: ["bottomCenter"] }} />
-        </Card>
+        <Table
+          style={{ margin: 20 }}
+          columns={columns}
+          rowKey={(record) => record._id}
+          pagination={{ pageSize: 10 }}
+          dataSource={users}
+          onChange={(pagination) => setPage(pagination.current)}
+        />
         <BackTop />
       </Spin>
       <Modal
-        title="Thêm chứng chỉ cho mentor"
+        title="Thêm chứng chỉ"
         visible={openModal}
-        onOk={() => {
-          form
-            .validateFields()
-            .then(handleAddCertificateToMentor)
-            .catch((info) => console.log("Validate Failed:", info));
-        }}
         onCancel={() => setOpenModal(false)}
-        okText="Tạo"
-        cancelText="Đóng"
+        footer={null}
       >
-        <Form form={form} layout="vertical">
-          <Form.Item name="username" label="Tên mentor">
-            <Input />
-          </Form.Item>
-          <Form.Item name="email" label="Email mentor">
-            <Input />
-          </Form.Item>
-          <Form.Item
-            name="certificates"
-            label="Danh mục chứng chỉ"
-            rules={[{ required: true, message: "Vui lòng chọn chứng chỉ!" }]}
+        <Spin spinning={loading}>
+          <Form
+            form={form}
+            layout="vertical"
+            onFinish={handleAddCertificateToMentor}
           >
-            <Select mode="multiple" placeholder="Danh mục">
-              {certificates.map((item) => (
-                <Select.Option key={item._id} value={item._id}>
-                  {item.title}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-        </Form>
+            <Form.Item
+              name="username"
+              label="Username"
+              rules={[{ required: true, message: "Please input the username!" }]}
+            >
+              <Input disabled />
+            </Form.Item>
+            <Form.Item
+              name="email"
+              label="Email"
+              rules={[{ required: true, message: "Please input the email!" }]}
+            >
+              <Input disabled />
+            </Form.Item>
+            <Form.Item
+              name="certificates"
+              label="Chứng chỉ"
+              rules={[{ required: true, message: "Please select certificates!" }]}
+            >
+              <Select
+                mode="multiple"
+                placeholder="Select certificates"
+                allowClear
+              >
+                {certificates.map((certificate) => (
+                  <Select.Option key={certificate._id} value={certificate._id}>
+                    {certificate.title} {/* Hiển thị tiêu đề chứng chỉ */}
+                  </Select.Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Thêm chứng chỉ
+              </Button>
+            </Form.Item>
+          </Form>
+        </Spin>
       </Modal>
     </div>
   );
