@@ -20,6 +20,13 @@ const Login = lazy(() => {
   ]).then(([moduleExports]) => moduleExports);
 });
 
+const TeachingSchedule = lazy(() => {
+  return Promise.all([
+    import("../pages/TeachingsSchedule/teachingschedule"),
+    new Promise((resolve) => setTimeout(resolve, 0)),
+  ]).then(([moduleExports]) => moduleExports);
+});
+
 const AccountManagement = lazy(() => {
   return Promise.all([
     import("../pages/AccountManagement/accountManagement"),
@@ -169,7 +176,9 @@ const RouterURL = withRouter(({ location }) => {
             <PrivateRoute exact path="/notfound">
               <NotFound />
             </PrivateRoute>
-
+            <PrivateRoute exact path="/teaching-schedule">
+              <TeachingSchedule />
+            </PrivateRoute>
             <PrivateRoute exact path="/account-management">
               <Suspense fallback={<LoadingScreen />}>
                 <AccountManagement />
@@ -251,6 +260,9 @@ const RouterURL = withRouter(({ location }) => {
             <DefaultContainer />
           </Route>
           <Route exact path="/certificate">
+            <DefaultContainer />
+          </Route>
+          <Route exact path="/teaching-schedule">
             <DefaultContainer />
           </Route>
           <Route exact path="/promotion-management">

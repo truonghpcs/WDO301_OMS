@@ -124,12 +124,12 @@ const CourseList = () => {
         if (!response) {
           notification["error"]({
             message: `Thông báo`,
-            description: "Tạo chứng chỉ vào khóa học thất bại",
+            description: "Thêm chứng chỉ vào khóa học thất bại",
           });
         } else {
           notification["success"]({
             message: `Thông báo`,
-            description: "Tạo chứng chỉ vào khóa học thành công",
+            description: "Thêm chứng chỉ vào khóa học thành công",
           });
           setOpenModalAddCertificateToCourse(false);
         }
@@ -519,7 +519,7 @@ const CourseList = () => {
         });
     };
     getCertificates();
-  }, []);
+  }, [certificateOfCourse]);
   useEffect(() => {
     const local = localStorage.getItem("user");
     const user = JSON.parse(local);

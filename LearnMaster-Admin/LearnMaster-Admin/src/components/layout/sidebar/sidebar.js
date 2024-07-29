@@ -79,8 +79,8 @@ function Sidebar() {
     },
     {
       key: "course-list",
-      title: "Danh sách khóa học",
-      link: "/course-list",
+      title: "Lịch dạy",
+      link: "/teaching-schedule",
       icon: <FormOutlined />,
     },
     {

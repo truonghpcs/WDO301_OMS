@@ -80,7 +80,6 @@ const ProductDetail = () => {
     
 
     fetchData();
-    window.scrollTo(0, 0);
   }, [id, cartLength, mentors]);
 
   const handleReadMore = (id) => {

@@ -144,7 +144,7 @@ const AddClass = () => {
                 onChange={(time, timeString) => {
                   if (
                     new Date(time[1]).getTime() - new Date(time[0]).getTime() <
-                    7199631
+                    7199635
                   ) {
                     alert("Thời gian tối thiểu 2 tiếng");
                     setTimeLearn([]);

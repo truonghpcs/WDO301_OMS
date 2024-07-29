@@ -104,14 +104,14 @@ const AccountManagement = () => {
       await userApi.addCertificateToMentor(selectedUserId, values.certificates);
       notification["success"]({
         message: "Thông báo",
-        description: "Tạo chứng chỉ vào mentor thành công",
+        description: "Thêm chứng chỉ vào mentor thành công",
       });
       setOpenModal(false);
       loadData();
     } catch (error) {
       notification["error"]({
         message: "Thông báo",
-        description: "Tạo chứng chỉ vào mentor thất bại",
+        description: "Thêm chứng chỉ vào mentor thất bại",
       });
     } finally {
       setLoading(false);
