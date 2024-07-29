@@ -1,0 +1,123 @@
+[{
+  "_id": {
+    "$oid": "66a53d689f816569030dd21c"
+  },
+  "mentor": {
+    "$oid": "66a281c31174278c080c62b5"
+  },
+  "course": {
+    "$oid": "66a49ac702acc09f7dee402a"
+  },
+  "urlLearn": "https://us05web.zoom.us/j/89010248066?pwd=NufnNQURtrsXoGJxQb5Wub0ui5HLzy.1",
+  "dateLearn": "2024-08-02",
+  "timeStart": "15:00:00",
+  "timeEnd": "18:00:00",
+  "student": {
+    "$oid": "668cba9763bb98f79ffefc28"
+  },
+  "createdAt": {
+    "$date": "2024-07-27T18:33:12.751Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-27T18:33:31.194Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a53d6c9f816569030dd220"
+  },
+  "mentor": {
+    "$oid": "66a281c31174278c080c62b5"
+  },
+  "course": {
+    "$oid": "66a49ac702acc09f7dee402a"
+  },
+  "urlLearn": "https://us05web.zoom.us/j/89010248066?pwd=NufnNQURtrsXoGJxQb5Wub0ui5HLzy.1",
+  "dateLearn": "2024-08-03",
+  "timeStart": "15:00:00",
+  "timeEnd": "18:00:00",
+  "student": {
+    "$oid": "668cba9763bb98f79ffefc28"
+  },
+  "createdAt": {
+    "$date": "2024-07-27T18:33:16.164Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-27T18:34:45.334Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a53f10413edf5e3406fe24"
+  },
+  "mentor": {
+    "$oid": "66a281c31174278c080c62b5"
+  },
+  "course": {
+    "$oid": "66a49ac702acc09f7dee402a"
+  },
+  "urlLearn": "https://us05web.zoom.us/j/89010248066?pwd=NufnNQURtrsXoGJxQb5Wub0ui5HLzy.1",
+  "dateLearn": "2024-08-04",
+  "timeStart": "15:00:00",
+  "timeEnd": "18:00:00",
+  "student": {
+    "$oid": "668cba9763bb98f79ffefc28"
+  },
+  "createdAt": {
+    "$date": "2024-07-27T18:40:16.141Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-28T03:30:05.905Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a53f15413edf5e3406fe28"
+  },
+  "mentor": {
+    "$oid": "66a281c31174278c080c62b5"
+  },
+  "course": {
+    "$oid": "66a49ac702acc09f7dee402a"
+  },
+  "urlLearn": "https://us05web.zoom.us/j/89010248066?pwd=NufnNQURtrsXoGJxQb5Wub0ui5HLzy.1",
+  "dateLearn": "2024-08-05",
+  "timeStart": "15:00:00",
+  "timeEnd": "18:00:00",
+  "student": null,
+  "createdAt": {
+    "$date": "2024-07-27T18:40:21.881Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-27T18:40:21.881Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a5bc0d326746054fca20fb"
+  },
+  "mentor": {
+    "$oid": "66a281c31174278c080c62b5"
+  },
+  "course": {
+    "$oid": "668cab78120bf395b70b7e8b"
+  },
+  "urlLearn": "https://us05web.zoom.us/j/89010248066?pwd=NufnNQURtrsXoGJxQb5Wub0ui5HLzy.1",
+  "dateLearn": "2024-08-06",
+  "timeStart": "17:30:00",
+  "timeEnd": "19:30:00",
+  "student": {
+    "$oid": "668cba9763bb98f79ffefc28"
+  },
+  "createdAt": {
+    "$date": "2024-07-28T03:33:33.512Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-28T03:35:17.771Z"
+  },
+  "__v": 0
+}]

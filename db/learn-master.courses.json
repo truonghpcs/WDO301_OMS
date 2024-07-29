@@ -1,0 +1,371 @@
+[{
+  "_id": {
+    "$oid": "668cab78120bf395b70b7e8b"
+  },
+  "title": "Java",
+  "description": "Java cho người mới bắt đầu ",
+  "slug": "Java",
+  "category": {
+    "$oid": "668c9fb166f35c4ec22b3f71"
+  },
+  "lessons": [
+    {
+      "title": "Java cho người mới bắt đầu ",
+      "videoUrl": "https://www.youtube.com/watch?v=7L0RLrfrBHE&list=PLncHg6Kn2JT5EVkhKoJmzOytHY39Mrf_o",
+      "_id": {
+        "$oid": "668cab78120bf395b70b7e8c"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721322168836-613a1f3685814.png",
+  "price": 250000,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-09T03:16:08.078Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-23T01:44:25.409Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "668cadf9069e230ef5421abd"
+  },
+  "title": "JavaScript ",
+  "description": "JavaScript ",
+  "slug": "JavaScript ",
+  "category": {
+    "$oid": "668c9fb166f35c4ec22b3f71"
+  },
+  "lessons": [
+    {
+      "title": "JavaScript bài 1 ",
+      "videoUrl": "https://www.youtube.com/watch?v=0SJE9dYdpps&list=PL_-VfJajZj0VgpFpEVFzS5Z-lkXtBe-x5",
+      "_id": {
+        "$oid": "668cadf9069e230ef5421abe"
+      }
+    },
+    {
+      "title": "JavaScript bài 2",
+      "videoUrl": "https://www.youtube.com/watch?v=-jV06pqjUUc&list=PL_-VfJajZj0VgpFpEVFzS5Z-lkXtBe-x5&index=2",
+      "_id": {
+        "$oid": "668cadf9069e230ef5421abf"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721322205025-8c4eed15a33744e996461692464ebc7f.jpg",
+  "price": 350000,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-09T03:26:49.680Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-23T01:45:11.302Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66995466ca8cc2f00fec51bb"
+  },
+  "title": "ReactJS",
+  "description": "ReactJS là gì | Tại sao nên học ReactJS | Khóa học ReactJS miễn phí",
+  "slug": "ReactJS",
+  "category": {
+    "$oid": "668cb23963bb98f79ffef905"
+  },
+  "lessons": [
+    {
+      "title": "ReactJS là gì | Tại sao nên học ReactJS ",
+      "videoUrl": "https://www.youtube.com/watch?v=x0fSBAgBrOQ&list=PL_-VfJajZj0UXjlKfBwFX73usByw3Ph9Q",
+      "_id": {
+        "$oid": "66995466ca8cc2f00fec51bc"
+      }
+    },
+    {
+      "title": "SPA/MPA là gì | Khái niệm SPA",
+      "videoUrl": "https://www.youtube.com/watch?v=30sMCciFIAM&list=PL_-VfJajZj0UXjlKfBwFX73usByw3Ph9Q&index=2",
+      "_id": {
+        "$oid": "66995466ca8cc2f00fec51bd"
+      }
+    },
+    {
+      "title": "Arrow function trong JavaScript ES6 | Khái niệm arrow function",
+      "videoUrl": "https://www.youtube.com/watch?v=9QeNLypIiZs&list=PL_-VfJajZj0UXjlKfBwFX73usByw3Ph9Q&index=3",
+      "_id": {
+        "$oid": "66995466ca8cc2f00fec51be"
+      }
+    },
+    {
+      "title": "Module trong JavaScript ES6",
+      "videoUrl": "https://www.youtube.com/watch?v=08lWi4T2Bfg&list=PL_-VfJajZj0UXjlKfBwFX73usByw3Ph9Q&index=4",
+      "_id": {
+        "$oid": "66995466ca8cc2f00fec51bf"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721324646724-Benefits-of-ReactJS.jpg",
+  "price": 1000000,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-18T17:44:06.851Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-18T17:44:06.851Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669954e3ca8cc2f00fec51d2"
+  },
+  "title": "NodeJS & ExpressJS",
+  "description": "Học NodeJS miễn phí",
+  "slug": "NodeJS & ExpressJS",
+  "category": {
+    "$oid": "668cb22863bb98f79ffef901"
+  },
+  "lessons": [
+    {
+      "title": "Lời khuyên trước khóa học Node Express | Học lập trình cơ bản | Học NodeJS miễn phí",
+      "videoUrl": "https://www.youtube.com/watch?v=z2f7RHgvddc&list=PL_-VfJajZj0VatBpaXkEHK_UPHL7dW6I3",
+      "_id": {
+        "$oid": "66995466ca8cc2f00fec51bc"
+      }
+    },
+    {
+      "title": "HTTP protocol | Giao thức HTTP | Giao thức truyền tải siêu văn bản",
+      "videoUrl": "https://www.youtube.com/watch?v=SdcdneSdoV4&list=PL_-VfJajZj0VatBpaXkEHK_UPHL7dW6I3&index=2",
+      "_id": {
+        "$oid": "66995466ca8cc2f00fec51bd"
+      }
+    },
+    {
+      "title": "SSR & CSR | Sever side rendering | Client side rendering",
+      "videoUrl": "https://www.youtube.com/watch?v=HLEu57iLrRo&list=PL_-VfJajZj0VatBpaXkEHK_UPHL7dW6I3&index=3",
+      "_id": {
+        "$oid": "66995466ca8cc2f00fec51be"
+      }
+    },
+    {
+      "title": "Cài đặt NodeJS | Install NodeJS",
+      "videoUrl": "https://www.youtube.com/watch?v=CcSuYLjKW3g&list=PL_-VfJajZj0VatBpaXkEHK_UPHL7dW6I3&index=4",
+      "_id": {
+        "$oid": "66995466ca8cc2f00fec51bf"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721324771670-dinh-nghia-nodejs-la-gi-maychusaigon.jpg",
+  "price": 1250000,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-18T17:46:11.701Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-18T17:46:11.701Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669956e6ca8cc2f00fec52e7"
+  },
+  "title": "HTML CSS",
+  "description": "HTML CSS",
+  "slug": "HTML CSS",
+  "category": {
+    "$oid": "668c9fb166f35c4ec22b3f71"
+  },
+  "lessons": [
+    {
+      "title": "Tổng quan về khóa học HTML CSS tại F8 | Học lập trình web cơ bản | Học được gì trong khóa học?",
+      "videoUrl": "https://www.youtube.com/watch?v=R6plN3FvzFY&list=PL_-VfJajZj0U9nEXa4qyfB4U5ZIYCMPlz",
+      "_id": {
+        "$oid": "669956e6ca8cc2f00fec52e8"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721325286331-68747470733a2f2f7777772e69696d2e66722f65636f6c652d7765622f77702d636f6e74656e742f75706c6f6164732f323031372f30312f48544d4c352e6a7067.jpeg",
+  "price": 4500000,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-18T17:54:46.371Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-18T17:54:46.371Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66995754ca8cc2f00fec532e"
+  },
+  "title": "Responsive website",
+  "description": "Responsive website",
+  "slug": "Responsive website",
+  "category": {
+    "$oid": "668c9fb166f35c4ec22b3f71"
+  },
+  "lessons": [
+    {
+      "title": "Khái niệm responsive | Kỹ thuật responsive | Responsive website",
+      "videoUrl": "https://www.youtube.com/watch?v=uz5LIP85J5Y&list=PL_-VfJajZj0VkWYODGeMuraS8V7xaOZM8",
+      "_id": {
+        "$oid": "66995754ca8cc2f00fec532f"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721325396554-1-2.jpeg",
+  "price": 500000,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-18T17:56:36.603Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-18T17:56:36.603Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "669957dcca8cc2f00fec53af"
+  },
+  "title": "HTML, CSS Tricks & Tips",
+  "description": "HTML, CSS Tricks & Tips",
+  "slug": "HTML, CSS Tricks & Tips",
+  "category": {
+    "$oid": "668c9fb166f35c4ec22b3f71"
+  },
+  "lessons": [
+    {
+      "title": "Sử dụng BEM tạo Toast Message UI",
+      "videoUrl": "https://www.youtube.com/watch?v=7c7ABhaQJGM&list=PL_-VfJajZj0Uwu5Y5G-wSet5uhKGxE7Cq",
+      "_id": {
+        "$oid": "669957dcca8cc2f00fec53b0"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721325532968-hq720.jpg",
+  "price": 300000,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-18T17:58:52.994Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-18T17:58:52.994Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6699582aca8cc2f00fec53ef"
+  },
+  "title": "Cách validate form với Javascript",
+  "description": "Cách validate form với Javascript",
+  "slug": "Cách validate form với Javascript",
+  "category": {
+    "$oid": "668c9fb166f35c4ec22b3f71"
+  },
+  "lessons": [
+    {
+      "title": "Form validation - Phần 1 | Thực hành HTML DOM",
+      "videoUrl": "https://www.youtube.com/watch?v=ZdvRm1bfGAk&list=PL_-VfJajZj0UjLMzxqGXUoE6iqpfbZysn",
+      "_id": {
+        "$oid": "6699582aca8cc2f00fec53f0"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721325610948-hqdefault.jpg",
+  "price": 250000,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-18T18:00:10.981Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-18T18:00:10.981Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a2750d7f954a8cc13f8508"
+  },
+  "title": "Khóa học mới 1 ( khong content)",
+  "description": "Khóa học mới 1 ( khong content)",
+  "slug": "/no-content",
+  "category": {
+    "$oid": "668c9fb166f35c4ec22b3f71"
+  },
+  "lessons": [
+    {
+      "title": "Khóa học mới 1 ( khong content)",
+      "videoUrl": "https://www.youtube.com/watch?v=0_4dOWXgnn8",
+      "content": "",
+      "_id": {
+        "$oid": "66a2750d7f954a8cc13f8509"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721922829934-117893500_723225601867021_6222449799846291016_n.jpg",
+  "price": 234342523,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-25T15:53:49.981Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T15:53:49.981Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "66a275807f954a8cc13f856a"
+  },
+  "title": "khóa học mới 2 ( có content )",
+  "description": "khóa học mới 2 ( có content )",
+  "slug": "/content-2",
+  "category": {
+    "$oid": "668c9fb166f35c4ec22b3f71"
+  },
+  "lessons": [
+    {
+      "title": "Khóa học mới 1 ( khong content)",
+      "videoUrl": "https://www.youtube.com/watch?v=0_4dOWXgnn8",
+      "content": "đây là content của khóa học 123",
+      "_id": {
+        "$oid": "66a2750d7f954a8cc13f8509"
+      }
+    }
+  ],
+  "image": "http://localhost:3100/uploads\\1721923874358-aaaaaaaaaaaaaaaaaaaa.jpg",
+  "price": 1235555,
+  "mentor": {
+    "$oid": "64491f49903624fa08f00dc6"
+  },
+  "createdAt": {
+    "$date": "2024-07-25T15:55:44.537Z"
+  },
+  "updatedAt": {
+    "$date": "2024-07-25T16:11:14.402Z"
+  },
+  "__v": 0
+}]
