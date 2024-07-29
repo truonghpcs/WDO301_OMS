@@ -48,6 +48,9 @@ const AddClass = () => {
       .catch((e) => {
         throw e;
       });
+      if (timeLearn.length > 0) {
+        form.resetFields();
+      }
   };
 
   const CancelCreateRecruitment = () => {

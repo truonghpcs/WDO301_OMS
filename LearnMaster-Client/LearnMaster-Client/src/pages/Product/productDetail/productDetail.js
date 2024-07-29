@@ -46,32 +46,42 @@ const ProductDetail = () => {
         const user = localStorage.getItem("user");
         const parsedUser = user ? JSON.parse(user) : null;
         setUserRole(parsedUser);
-
+    
         const courseResponse = await courseApi.getCourseById(id);
         setProductDetail(courseResponse.data);
-
+    
         const recommendResponse = await courseApi.getAllCourses(id);
         setRecommend(recommendResponse.data?.docs || []);
-
+    
         // Fetch mentors (assuming you have an API for mentors)
         const response = await userApi.listUserByAdmin({
           page: 1,
           limit: 1000,
         });
-        const mentors = response.data.docs.filter(
-          (user) => user.role === "isMentor"
-        );
+        const courseCertificates = courseResponse.data.certificates;
+    
+        const mentors = response.data.docs.filter((user) => {
+          if (user.role !== "isMentor") {
+            return false;
+          }
+          const mentorCertificates = user.certificates;
+          return courseCertificates.every((certificate) =>
+            mentorCertificates.includes(certificate)
+          );
+        });
+    
         setMentors(mentors);
-
+    
         setLoading(false);
       } catch (error) {
         console.log("Failed to fetch course details:", error);
       }
     };
+    
 
     fetchData();
     window.scrollTo(0, 0);
-  }, [id, cartLength]);
+  }, [id, cartLength, mentors]);
 
   const handleReadMore = (id) => {
     history.push(`/product-detail/${id}`);

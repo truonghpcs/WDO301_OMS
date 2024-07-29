@@ -62,6 +62,13 @@ const DashBoard = lazy(() => {
   ]).then(([moduleExports]) => moduleExports);
 });
 
+const Certificate = lazy(() => {
+  return Promise.all([
+    import("../pages/Certificate/certificate"),
+    new Promise((resolve) => setTimeout(resolve, 0)),
+  ]).then(([moduleExports]) => moduleExports);
+});
+
 const NewsList = lazy(() => {
   return Promise.all([
     import("../pages/News/news"),
@@ -147,6 +154,11 @@ const RouterURL = withRouter(({ location }) => {
             <PrivateRoute exact path="/dash-board">
               <Suspense fallback={<LoadingScreen />}>
                 <DashBoard />
+              </Suspense>
+            </PrivateRoute>
+            <PrivateRoute exact path="/certificate">
+              <Suspense fallback={<LoadingScreen />}>
+                <Certificate />
               </Suspense>
             </PrivateRoute>
             <PrivateRoute exact path="/profile">
@@ -238,6 +250,9 @@ const RouterURL = withRouter(({ location }) => {
           <Route exact path="/add-certification">
             <DefaultContainer />
           </Route>
+          <Route exact path="/certificate">
+            <DefaultContainer />
+          </Route>
           <Route exact path="/promotion-management">
             <DefaultContainer />
           </Route>
@@ -250,7 +265,6 @@ const RouterURL = withRouter(({ location }) => {
           <Route exact path="/dash-board">
             <DefaultContainer />
           </Route>
-
           <Route exact path="/account-create">
             <DefaultContainer />
           </Route>

@@ -285,6 +285,7 @@ const userController = {
     });
     await newClass.save();
     res.status(200).json({ message: "Tạo lịch thành công" });
+
   },
 
   registerClass: async (req, res) => {

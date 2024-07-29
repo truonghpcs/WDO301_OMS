@@ -28,32 +28,90 @@ import {
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import userApi from "../../apis/userApi";
-import UserApi from "../../apis/userApi";
-import "./accountManagement.css";
 import certificateApi from "../../apis/certificateApi";
+import "./accountManagement.css";
 
 const AccountManagement = () => {
-  const [user, setUser] = useState([]);
+  const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [selectedInput, setSelectedInput] = useState();
+  const [searchInput, setSearchInput] = useState("");
   const history = useHistory();
-  const [openModalAddCertificateToMentor, setOpenModalAddCertificateToMentor] =
-    useState(false);
-  const [id, setId] = useState();
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [certificates, setCertificates] = useState([]);
   const [form] = Form.useForm();
-  const [certificate, setCertificate] = useState();
+
+  useEffect(() => {
+    fetchUsers();
+    fetchCertificates();
+  }, []);
+
+  const fetchUsers = async () => {
+    setLoading(true);
+    try {
+      const response = await userApi.listUserByAdmin({ page: 1, limit: 1000 });
+      setUsers(response.data.docs);
+    } catch (error) {
+      console.error("Failed to fetch users:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchCertificates = async () => {
+    try {
+      const response = await certificateApi.getAllCertificate();
+      setCertificates(response.data);
+    } catch (error) {
+      console.error("Failed to fetch certificates:", error);
+    }
+  };
 
   const titleCase = (str) => {
-    var splitStr = str?.toLowerCase().split(" ");
-    for (var i = 0; i < splitStr.length; i++) {
-      // You do not need to check if i is larger than splitStr length, as your for does that for you
-      // Assign it back to the array
-      splitStr[i] =
-        splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+    return str
+      ?.toLowerCase()
+      .split(" ")
+      .map((word) => word.charAt(0).toUpperCase() + word.substring(1))
+      .join(" ");
+  };
+
+  const handleBanAccount = async (user, status) => {
+    const params = { status };
+    try {
+      const apiCall = status === "actived" ? userApi.unBanAccount : userApi.banAccount;
+      await apiCall(params, user._id);
+      notification["success"]({
+        message: "Thông báo",
+        description: status === "actived" ? "Mở khóa thành công" : "Chặn thành công",
+      });
+      fetchUsers();
+    } catch (error) {
+      notification["error"]({
+        message: "Thông báo",
+        description: status === "actived" ? "Mở khóa thất bại" : "Chặn thất bại",
+      });
     }
-    // Directly return the joined string
-    return splitStr.join(" ");
+  };
+
+  const handleAddCertificateToMentor = async (values) => {
+    setLoading(true);
+    try {
+      await userApi.addCertificateToMentor(selectedUserId, values.certificates);
+      notification["success"]({
+        message: "Thông báo",
+        description: "Tạo chứng chỉ vào mentor thành công",
+      });
+      setOpenModal(false);
+      fetchUsers();
+    } catch (error) {
+      notification["error"]({
+        message: "Thông báo",
+        description: "Tạo chứng chỉ vào mentor thất bại",
+      });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const columns = [
@@ -61,21 +119,13 @@ const AccountManagement = () => {
       title: "ID",
       dataIndex: "id",
       key: "index",
-      render: (value, item, index) => (page - 1) * 10 + (index + 1),
+      render: (_, __, index) => (page - 1) * 10 + (index + 1),
     },
     {
       title: "Tên",
       dataIndex: "username",
       key: "username",
-      render: (text, record) => (
-        <Space size="middle">
-          {text == null || text == undefined ? (
-            ""
-          ) : (
-            <p style={{ margin: 0 }}>{titleCase(text)}</p>
-          )}
-        </Space>
-      ),
+      render: (text) => <p style={{ margin: 0 }}>{titleCase(text)}</p>,
     },
     {
       title: "Email",
@@ -92,402 +142,160 @@ const AccountManagement = () => {
       dataIndex: "role",
       key: "role",
       width: "12%",
-      render: (text, record) => (
-        <Space size="middle">
-          {text === "isAdmin" ? (
-            <Tag
-              color="blue"
-              key={text}
-              style={{ width: 120, textAlign: "center" }}
-              icon={<CopyOutlined />}
-            >
-              Quản lý
-            </Tag>
-          ) : text === "isMentor" ? (
-            <Tag
-              color="green"
-              key={text}
-              style={{ width: 120, textAlign: "center" }}
-              icon={<CheckCircleOutlined />}
-            >
-              Mentor
-            </Tag>
-          ) : text === "isCourseOwner" ? (
-            <Tag
-              color="purple"
-              key={text}
-              style={{ width: 120, textAlign: "center" }}
-              icon={<CheckCircleOutlined />}
-            >
-              Chủ khóa học
-            </Tag>
-          ) : (
-            <Tag
-              color="magenta"
-              key={text}
-              style={{ width: 120, textAlign: "center" }}
-              icon={<CheckCircleOutlined />}
-            >
-              Khách hàng
-            </Tag>
-          )}
-        </Space>
+      render: (text) => (
+        <Tag
+          color={text === "isAdmin" ? "blue" : text === "isMentor" ? "green" : text === "isCourseOwner" ? "purple" : "magenta"}
+          icon={<CopyOutlined />}
+          style={{ width: 120, textAlign: "center" }}
+        >
+          {text === "isAdmin" ? "Quản lý" : text === "isMentor" ? "Mentor" : text === "isCourseOwner" ? "Chủ khóa học" : "Khách hàng"}
+        </Tag>
       ),
     },
     {
       title: "Trạng thái",
       dataIndex: "status",
       key: "status",
-      render: (text, record) => (
-        <Space size="middle">
-          {text === "actived" ? (
-            <Tag
-              color="green"
-              key={text}
-              style={{ width: 80, textAlign: "center" }}
-            >
-              Hoạt động
-            </Tag>
-          ) : text === "newer" ? (
-            <Tag
-              color="blue"
-              key={text}
-              style={{ width: 80, textAlign: "center" }}
-            >
-              Newer
-            </Tag>
-          ) : (
-            <Tag
-              color="default"
-              key={text}
-              style={{ width: 80, textAlign: "center" }}
-            >
-              Chặn
-            </Tag>
-          )}
-        </Space>
+      render: (text) => (
+        <Tag
+          color={text === "actived" ? "green" : text === "newer" ? "blue" : "default"}
+          style={{ width: 80, textAlign: "center" }}
+        >
+          {text === "actived" ? "Hoạt động" : text === "newer" ? "Newer" : "Chặn"}
+        </Tag>
       ),
     },
     {
       title: "Action",
       key: "action",
-      render: (text, record) => (
-        <div>
-          <Row>
-            {record.role !== "isAdmin" && (
+      render: (_, record) => (
+        <Space size="middle">
+          {record.role !== "isAdmin" && record.role === "isMentor" && (
+            <Button size="small" style={{ borderRadius: 15 }} onClick={() => handleConnectCertificate(record._id)}>
+              Chứng chỉ
+            </Button>
+          )}
+          {record.role !== "isAdmin" && (
+            <Popconfirm
+              title={`Bạn muốn ${record.status === "actived" ? "chặn" : "mở chặn"} tài khoản này?`}
+              onConfirm={() => handleBanAccount(record, record.status === "actived" ? "noactive" : "actived")}
+              okText="Yes"
+              cancelText="No"
+            >
               <Button
                 size="small"
-                style={{ width: 150, borderRadius: 15, height: 30 }}
-                onClick={() => handleConnectCertificate(record._id)}
+                icon={record.status === "actived" ? <StopOutlined /> : <CheckCircleOutlined />}
+                style={{ borderRadius: 15 }}
               >
-                {"Chứng chỉ"}
+                {record.status === "actived" ? "Chặn tài khoản" : "Mở chặn tài khoản"}
               </Button>
-            )}
-
-            {record.role !== "isAdmin" &&
-              (record.status !== "actived" ? (
-                <Popconfirm
-                  title="Bạn muốn mở chặn tài khoản này?"
-                  onConfirm={() => handleUnBanAccount(record)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <Button
-                    size="small"
-                    icon={<CheckCircleOutlined />}
-                    style={{ width: 160, borderRadius: 15, height: 30 }}
-                  >
-                    {"Mở chặn tài khoản"}
-                  </Button>
-                </Popconfirm>
-              ) : (
-                <Popconfirm
-                  title="Bạn muốn chặn tài khoản này?"
-                  onConfirm={() => handleBanAccount(record)}
-                  okText="Yes"
-                  cancelText="No"
-                >
-                  <Button
-                    size="small"
-                    icon={<StopOutlined />}
-                    style={{ width: 160, borderRadius: 15, height: 30 }}
-                  >
-                    {"Chặn tài khoản"}
-                  </Button>
-                </Popconfirm>
-              ))}
-          </Row>
-        </div>
+            </Popconfirm>
+          )}
+        </Space>
       ),
     },
   ];
 
-  const handleListUser = async () => {
-    try {
-      const response = await userApi.listUserByAdmin({ page: 1, limit: 1000 });
-      console.log(response);
-      setUser(response.data.docs);
-      setLoading(false);
-    } catch (error) {
-      console.log("Failed to fetch event list:" + error);
-    }
-  };
-  const handleAddCertificateToMentor = async (values) => {
-    setLoading(true);
-    await UserApi.addCertificateToMentor(id, values.certificates)
-      .then((response) => {
-        if (!response) {
-          notification["error"]({
-            message: `Thông báo`,
-            description: "Tạo chứng chỉ vào mentor thất bại",
-          });
-        } else {
-          notification["success"]({
-            message: `Thông báo`,
-            description: "Tạo chứng chỉ vào mentor thành công",
-          });
-          setOpenModalAddCertificateToMentor(false);
-        }
-        setLoading(false);
-      })
-      .catch((e) => {
-        throw e;
-      });
-  };
-  const handleUnBanAccount = async (data) => {
-    const params = {
-      status: "actived",
-    };
-    try {
-      await userApi.unBanAccount(params, data._id).then((response) => {
-        if (response.message === "Email already exists") {
-          notification["error"]({
-            message: `Thông báo`,
-            description: "Mở khóa thất bại",
-          });
-        } else {
-          notification["success"]({
-            message: `Thông báo`,
-            description: "Mở khóa thành công",
-          });
-          handleListUser();
-        }
-      });
-    } catch (error) {
-      console.log("Failed to fetch event list:" + error);
+  const handleSearchChange = async (e) => {
+    setSearchInput(e.target.value);
+    if (e.target.value.trim() === "") {
+      fetchUsers();
+    } else {
+      try {
+        const response = await userApi.searchUser(e.target.value);
+        setUsers(response.data.docs);
+      } catch (error) {
+        console.error("Failed to search users:", error);
+      }
     }
   };
 
-  const handleBanAccount = async (data) => {
-    const params = {
-      status: "noactive",
-    };
+  const handleConnectCertificate = async (id) => {
+    setSelectedUserId(id);
+    setOpenModal(true);
     try {
-      await userApi.banAccount(params, data._id).then((response) => {
-        if (response === undefined) {
-          notification["error"]({
-            message: `Thông báo`,
-            description: "Chặn thất bại",
-          });
-        } else {
-          notification["success"]({
-            message: `Thông báo`,
-            description: "Chặn thành công",
-          });
-          handleListUser();
-        }
+      const response = await userApi.getProfileById(id);
+      form.setFieldsValue({
+        username: response.data.username,
+        email: response.data.email,
       });
     } catch (error) {
-      console.log("Failed to fetch event list:" + error);
+      console.error("Failed to fetch user profile:", error);
     }
   };
-  const handleConnectCertificate = (id) => {
-    setOpenModalAddCertificateToMentor(true);
-    (async () => {
-      try {
-        const response = await userApi.getProfileById(id);
-        setId(id);
-        form.setFieldsValue({
-          username: response.data.username,
-          email: response.data.email,
-        });
-        // setCertificateOfCourse(response.data.certificates);
-        setLoading(false);
-      } catch (error) {
-        throw error;
-      }
-    })();
-  };
+
   const handleCreateAccount = () => {
     history.push("/account-create");
   };
 
-  const handleFilterEmail = async (email) => {
-    try {
-      const response = await userApi.searchUser(email);
-      setUser(response.data.docs);
-    } catch (error) {
-      console.log("search to fetch user list:" + error);
-    }
-  };
-  useEffect(() => {
-    const getCertificates = async () => {
-      await certificateApi
-        .getAllCertificate()
-        .then((res) => {
-          setCertificate(res.data);
-        })
-        .catch((e) => {
-          throw e;
-        });
-    };
-    getCertificates();
-  }, []);
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await userApi.listUserByAdmin({
-          page: 1,
-          limit: 1000,
-        });
-        setUser(response.data.docs);
-        setLoading(false);
-      } catch (error) {
-        console.log("Failed to fetch user list:" + error);
-      }
-    })();
-    window.scrollTo(0, 0);
-  }, []);
   return (
     <div>
       <Spin spinning={loading}>
-        <div style={{ marginTop: 20, marginLeft: 24 }}>
-          <Breadcrumb>
-            <Breadcrumb.Item href="">
-              <HomeOutlined />
-            </Breadcrumb.Item>
-            <Breadcrumb.Item href="">
-              <UserOutlined />
-              <span>Quản lý tài khoản</span>
-            </Breadcrumb.Item>
-          </Breadcrumb>
-        </div>
+        <Breadcrumb style={{ margin: "20px 0 0 24px" }}>
+          <Breadcrumb.Item href="">
+            <HomeOutlined />
+          </Breadcrumb.Item>
+          <Breadcrumb.Item href="">
+            <UserOutlined />
+            <span>Quản lý tài khoản</span>
+          </Breadcrumb.Item>
+        </Breadcrumb>
         <div id="account">
-          <div id="account_container">
-            <PageHeader
-              subTitle=""
-              style={{ fontSize: 14, paddingTop: 20, paddingBottom: 20 }}
-            >
-              <Row>
-                <Col span="12">
-                  <Input
-                    placeholder="Tìm kiếm"
-                    allowClear
-                    style={{ width: 300 }}
-                    onChange={handleFilterEmail}
-                    value={selectedInput}
-                  />
-                </Col>
-                <Col span="12">
-                  <Row justify="end">
-                    <Button
-                      style={{ marginLeft: 10 }}
-                      icon={<PlusOutlined />}
-                      size="middle"
-                      onClick={() => handleCreateAccount()}
-                    >
-                      {"Tạo tài khoản"}
-                    </Button>
-                  </Row>
-                </Col>
-              </Row>
-            </PageHeader>
-          </div>
-        </div>
-        <div style={{ marginTop: 20, marginRight: 5 }}>
-          <div id="account">
-            <div id="account_container">
-              <Card title="Quản lý tài khoản" bordered={false}>
-                <Table
-                  columns={columns}
-                  dataSource={user}
-                  pagination={{ position: ["bottomCenter"] }}
+          <PageHeader subTitle="" style={{ paddingTop: 20, paddingBottom: 20 }}>
+            <Row gutter={16} align="middle">
+              <Col span={12}>
+                <Input
+                  placeholder="Tìm kiếm"
+                  allowClear
+                  style={{ width: 300 }}
+                  onChange={handleSearchChange}
+                  value={searchInput}
                 />
-              </Card>
-            </div>
-          </div>
+              </Col>
+              <Col span={12} style={{ textAlign: "right" }}>
+                <Button icon={<PlusOutlined />} onClick={handleCreateAccount}>
+                  Tạo tài khoản
+                </Button>
+              </Col>
+            </Row>
+          </PageHeader>
         </div>
-        <BackTop style={{ textAlign: "right" }} />
+        <Card title="Quản lý tài khoản" bordered={false} style={{ marginTop: 20, marginRight: 5 }}>
+          <Table columns={columns} dataSource={users} pagination={{ position: ["bottomCenter"] }} />
+        </Card>
+        <BackTop />
       </Spin>
       <Modal
         title="Thêm chứng chỉ cho mentor"
-        visible={openModalAddCertificateToMentor}
-        style={{ top: 100 }}
+        visible={openModal}
         onOk={() => {
           form
             .validateFields()
-            .then((values) => {
-              handleAddCertificateToMentor(values);
-            })
-            .catch((info) => {
-              console.log("Validate Failed:", info);
-            });
+            .then(handleAddCertificateToMentor)
+            .catch((info) => console.log("Validate Failed:", info));
         }}
-        onCancel={() => setOpenModalAddCertificateToMentor(false)}
+        onCancel={() => setOpenModal(false)}
         okText="Tạo"
         cancelText="Đóng"
       >
-        <Form
-          layout="vertical"
-          form={form}
-          initialValues={{
-            title: "",
-            slug: "",
-          }}
-        >
-          <Form.Item
-            style={{ marginBottom: 10 }}
-            name="username"
-            label="Tên mentor"
-          >
+        <Form form={form} layout="vertical">
+          <Form.Item name="username" label="Tên mentor">
             <Input />
           </Form.Item>
-          <Form.Item
-            style={{ marginBottom: 10 }}
-            name="email"
-            label="Email mentor"
-          >
+          <Form.Item name="email" label="Email mentor">
             <Input />
           </Form.Item>
           <Form.Item
             name="certificates"
             label="Danh mục chứng chỉ"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn chứng chỉ!",
-              },
-            ]}
-            style={{ marginBottom: 10 }}
+            rules={[{ required: true, message: "Vui lòng chọn chứng chỉ!" }]}
           >
-            <Select
-              mode="multiple"
-              style={{ width: "100%" }}
-              tokenSeparators={[","]}
-              placeholder="Danh mục"
-              name={"certificates"}
-              showSearch
-              filterOption={(input, option) =>
-                option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
-              }
-            >
-              {certificate?.map((item, index) => {
-                return (
-                  <Select.Option value={item?._id} key={index}>
-                    {item?.title}
-                  </Select.Option>
-                );
-              })}
+            <Select mode="multiple" placeholder="Danh mục">
+              {certificates.map((item) => (
+                <Select.Option key={item._id} value={item._id}>
+                  {item.title}
+                </Select.Option>
+              ))}
             </Select>
           </Form.Item>
         </Form>

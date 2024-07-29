@@ -14,6 +14,7 @@ import {
   ShoppingCartOutlined,
   FormOutlined,
   NotificationOutlined,
+  SafetyCertificateOutlined
 } from "@ant-design/icons";
 
 const { SubMenu } = Menu;
@@ -30,6 +31,12 @@ function Sidebar() {
       title: "Dashboards",
       link: "/dash-board",
       icon: <DashboardOutlined />,
+    },
+    {
+      key: "certificate",
+      title: "Certificate",
+      link: "/certificate",
+      icon: <SafetyCertificateOutlined />,
     },
     {
       key: "account-management",
