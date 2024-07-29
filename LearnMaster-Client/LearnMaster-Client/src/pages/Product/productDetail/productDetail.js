@@ -264,6 +264,18 @@ const ProductDetail = () => {
                       </a>
                     </div>
                   </div>
+                  <Select
+                      placeholder="Chọn mentor"
+                      style={{ width: "100%", marginBottom: 20 }}
+                      onChange={handleMentorSelect}
+                      value={selectedMentor}
+                    >
+                      {mentors.map((mentor) => (
+                        <Option key={mentor._id} value={mentor._id}>
+                          {mentor.username}
+                        </Option>
+                      ))}
+                    </Select>
 
                   <div className="mt-3">
                     {selectedMentor && (
@@ -322,18 +334,7 @@ const ProductDetail = () => {
                         )}
                       </div>
                     )}
-                    <Select
-                      placeholder="Chọn mentor"
-                      style={{ width: "100%", marginBottom: 20 }}
-                      onChange={handleMentorSelect}
-                      value={selectedMentor}
-                    >
-                      {mentors.map((mentor) => (
-                        <Option key={mentor._id} value={mentor._id}>
-                          {mentor.username}
-                        </Option>
-                      ))}
-                    </Select>
+                   
                     <div box_cart_1 style={{ marginBottom: 20 }}>
                       <input
                         type="radio"

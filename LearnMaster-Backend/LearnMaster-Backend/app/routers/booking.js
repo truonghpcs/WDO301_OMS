@@ -12,7 +12,6 @@ router.get('/mentor/:mentorId', middleware.checkLogin, bookingController.getBook
 router.put('/cancel/:id', middleware.checkLogin, bookingController.cancelBooking);
 router.post('/create-checkout-session', middleware.checkLogin, stripeController.createCheckoutSession);
 router.post('/create-payment', middleware.checkLogin, stripeController.createPayment);
-
 router.get('/', middleware.checkLogin, bookingController.getAllBookings); 
 
 module.exports = router;

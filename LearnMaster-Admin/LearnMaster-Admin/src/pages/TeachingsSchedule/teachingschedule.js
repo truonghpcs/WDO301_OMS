@@ -1,36 +1,15 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
-import { Table, Image, Button, notification, Popconfirm } from 'antd';
-import 'antd/dist/reset.css'; // Ensure this import matches your Ant Design version
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import 'antd/dist/reset.css'; // Đảm bảo import này phù hợp với phiên bản Ant Design của bạn
+import "../TeachingsSchedule/teachingSchedule.css";
 import axios from 'axios';
 
-function TeachingSchedule(props) {
-    // get all bookings
-    const [myBookings, setMyBookings] = useState([]);
-    console.log(myBookings);
+function TeachingSchedule() {
 
-    useEffect(() => {
-        const user = JSON.parse(localStorage.getItem('user'));
-        const fetchBookings = async () => {
-            try {
-                const response = await axios.get('http://localhost:3100/api/bookings');
-                const bookings = response.data.data;
-                const myBookings = bookings.filter(booking => booking.mentorId === user._id);
-                setMyBookings(myBookings);
-            } catch (error) {
-                console.error('Error fetching bookings:', error);
-            }
-
-        }
-        
-        fetchBookings();
-    }, []);
 
     return (
-        <div>
+        <div className='Teaching-Schedule'>
             <h1>Teaching Schedule</h1>
-
+            {/* Render myBookings ở đây */}
         </div>
     );
 }

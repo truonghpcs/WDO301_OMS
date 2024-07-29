@@ -18,6 +18,7 @@ const certificateRoute = require('./app/routers/certificate');
 const bookingRoutes = require('./app/routers/booking');
 const uploadRoutes = require('./app/routers/upload');
 const statsRouter = require('./app/routers/stats');
+const classRoute = require('./app/routers/class');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -44,6 +45,8 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/bookings', bookingRoutes);
 app.use('/api/upload-image', uploadRoutes);
 app.use('/api/stats', statsRouter);
+app.use('/api/class', classRoute);
+
 
 const PORT = process.env.PORT || _CONST.PORT;
 
